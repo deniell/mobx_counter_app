@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobx_counter_app/pages/counter_page.dart';
 import 'package:mobx_counter_app/pages/dice_page.dart';
+import 'package:mobx_counter_app/stores/dice_store.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,8 +40,11 @@ class HomePage extends StatelessWidget {
                 backgroundColor: Colors.blue,
                 padding: const EdgeInsets.all(20),
               ),
-              onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: ((context) => const DicePage()))
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: ((context) => Provider<DiceStore>(
+                        create: (_) => DiceStore(),
+                        child: const DicePage(),
+                  )))
               ),
               child: const Text(
                 "Dice page",

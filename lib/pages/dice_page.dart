@@ -12,23 +12,62 @@ class DicePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final diceStore = Provider.of<DiceStore>(context);
 
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
+    return Scaffold(
+      backgroundColor: Colors.amber,
+      appBar: AppBar(
+        backgroundColor: Colors.amberAccent,
+        title: Text(
+          'Tap the dice !!!'.toUpperCase(),
+          style: const TextStyle(
+            fontSize: 16,
+            fontFamily: 'Hind',
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                child: TextButton(
-                  onPressed: diceStore.roll,
-                  child: Observer(
-                    builder: (_) => Image.asset('images/dice${diceStore.left}.png'),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: diceStore.roll,
+                      child: Observer(
+                        builder: (_) => Image.asset('images/dice${diceStore.left}.png'),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: diceStore.roll,
+                      child: Observer(
+                        builder: (_) => Image.asset('images/dice${diceStore.right}.png'),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(50),
+                child: Observer(
+                  builder: (_) => Text(
+                    'Total ${diceStore.total}',
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontFamily: 'Verdana',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
