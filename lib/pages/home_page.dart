@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobx_counter_app/pages/counter_page.dart';
 import 'package:mobx_counter_app/pages/dice_page.dart';
+import 'package:mobx_counter_app/pages/form_page.dart';
 import 'package:mobx_counter_app/stores/dice_store.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +49,24 @@ class HomePage extends StatelessWidget {
               ),
               child: const Text(
                 "Dice page",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 25),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.all(20),
+              ),
+              onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: ((context) => const FormPage()))
+              ),
+              child: const Text(
+                "Form page",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,

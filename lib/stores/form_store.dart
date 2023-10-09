@@ -6,7 +6,7 @@ class FormStore = _FormStore with _$FormStore;
 
 abstract class _FormStore with Store {
   @observable
-  String name = '';
+  String username = '';
 
   @observable
   String email = '';
@@ -14,9 +14,18 @@ abstract class _FormStore with Store {
   @observable
   String password = '';
 
+  @observable
+  ObservableFuture<bool> usernameCheck = ObservableFuture.value(true);
+
+  @computed
+  bool get isUserCheckPending => usernameCheck.status == FutureStatus.pending;
+
+  @computed
+  bool get canLogin => !error.hasError;
+
   @action
   void setUsername(String value) {
-    name = value;
+    username = value;
   }
 
   @action
@@ -27,6 +36,22 @@ abstract class _FormStore with Store {
   @action
   void setPassword(String value) {
     password = value;
+  }
+
+  late List<ReactionDisposer> _disposers;
+
+  void setupValidations() {
+    _disposers = [
+      reaction((_) => username, validateUsername),
+      reaction((_) => email, validateEmail),
+      reaction((_) => password, validatePassword)
+    ];
+  }
+
+  void dispose() {
+    for (final d in _disposers) {
+      d();
+    }
   }
 
   final FormErrorState error = FormErrorState();
@@ -72,6 +97,12 @@ abstract class _FormStore with Store {
     await Future.delayed(const Duration(seconds: 1));
 
     return value != 'admin';
+  }
+
+  void validateAll() {
+    validatePassword(password);
+    validateEmail(email);
+    validateUsername(username);
   }
 }
 
