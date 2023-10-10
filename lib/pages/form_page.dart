@@ -32,7 +32,7 @@ class _FormPageState extends State<FormPage> {
       ),
       body: Form(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               Observer(
@@ -52,6 +52,27 @@ class _FormPageState extends State<FormPage> {
                   child: const LinearProgressIndicator()
                 ),
               ),
+              Observer(
+                builder: (_) => TextField(
+                  onChanged: (value) => store.email = value,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Enter your email address',
+                    errorText: store.error.email,
+                  ),
+                )
+              ),
+              Observer(
+                builder: (_) => TextField(
+                  onChanged: (value) => store.password = value,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Set a password',
+                    errorText: store.error.password,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: store.validateAll,
                 child: const Text('Sign Up'),
